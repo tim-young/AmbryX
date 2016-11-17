@@ -1,0 +1,18 @@
+{
+    "clusterName": "OneDiskOneReplica",
+    "version": 88,
+    "partitions": [
+        {
+            "id": 0,
+            "partitionState": "READ_WRITE",
+            "replicaCapacityInBytes": 10737418240,
+            "replicas": [
+                {
+                    "hostname": "localhost",
+                    "mountPath": "D:/Users/862911/ambry/tmp",
+                    "port": 6667
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,57 @@
+/**
+ * Copyright 2016 LinkedIn Corp. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+package com.github.ambry.store;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * A mock journal that makes use of Journal in the background, and provides support for pausing and
+ * resuming the addition of entries to the backing Journal. This can be used to simulate the race
+ * condition of an entry getting added to the index but not yet to the journal.
+ */
+class MockJournal extends Journal {
+  private List<Long> savedOffsets;
+  private List<StoreKey> savedKeys;
+  boolean paused;
+
+  public MockJournal(String dataDir, int maxEntriesToJournal, int maxEntriesToReturn) {
+    super(dataDir, maxEntriesToJournal, maxEntriesToReturn);
+    savedOffsets = new ArrayList<Long>();
+    savedKeys = new ArrayList<StoreKey>();
+    paused = false;
+  }
+
+  public void pause() {
+    paused = true;
+  }
+
+  public void resume() {
+    for (int i = 0; i < savedOffsets.size(); i++) {
+      super.addEntry(savedOffsets.get(i), savedKeys.get(i));
+    }
+    paused = false;
+  }
+
+  @Override
+  public void addEntry(long offset, StoreKey key) {
+    if (paused) {
+      savedOffsets.add(offset);
+      savedKeys.add(key);
+    } else {
+      super.addEntry(offset, key);
+    }
+  }
+}
