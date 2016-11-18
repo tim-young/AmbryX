@@ -35,3 +35,6 @@ mvn package -Dmaven.test.skip=true
 源项目地址：[Ambry](https://github.com/linkedin/ambry)
 
 [我的Ambry系列博客](http://www.hashzhang.com/frontend/html/blogKind.html?blogKindId=00001eadb2b09_f749_41d2_a8ac_96758cb62c00)
+
+#联系方式
+暂时不能公布
