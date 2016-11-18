@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github</groupId>
+    <groupId>com.github.ambry</groupId>
     <artifactId>ambry</artifactId>
     <packaging>pom</packaging>
     <version>${project.version}</version>
@@ -26,6 +26,7 @@
         <module>ambry-frontend</module>
         <module>ambry-tools</module>
         <module>ambry-server</module>
+        <module>ambry-package</module>
     </modules>
 
     <properties>
@@ -112,5 +113,6 @@
                 </configuration>
             </plugin>
         </plugins>
+
     </build>
 </project>

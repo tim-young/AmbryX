@@ -1,8 +1,8 @@
 #Ambry
 
-源项目地址：[Ambry](https://github.com/linkedin/ambry)
 
-Ambry是领英开源的分布式对象存储框架，是一种NFS的实现。
+
+Ambry是领英开源的分布式对象存储框架，是一种CDN的实现。
 
 以下翻译自Ambry团队官方博客：
 
@@ -14,5 +14,23 @@ Ambry是一个分布式不可变高可用对象存储系统，并且可容易扩
 
 #AmbryX
 我们将基于Ambry做一些完善和补充，并且做一些适合于国内应用环境的改造。在此立项，欢迎大家补充想法。
+
+#快速部署
+**拉下代码：**
+```
+git clone https://github.com/HashZhang/AmbryX.git
+```
+**在项目根目录执行：**
+```
+mvn package -Dmaven.test.skip=true
+```
+**在ambry-package模块的target目录下找到ambry-assembly.tar.gz，部署到linux服务器上，配置好配置文件，运行./bin/ambry.sh，按照指示操作**
+
+
 #历史改造
-1.改造项目依赖管理为更多国内人使用的maven
+1. 改造项目依赖管理为更多国内人使用的maven
+2. 增加打包配置与启动脚本
+
+#相关资料
+源项目地址：[Ambry](https://github.com/linkedin/ambry)
+[我的Ambry系列博客](http://www.hashzhang.com/frontend/html/blogKind.html?blogKindId=00001eadb2b09_f749_41d2_a8ac_96758cb62c00)

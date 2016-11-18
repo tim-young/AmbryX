@@ -9,7 +9,7 @@
             "replicas": [
                 {
                     "hostname": "localhost",
-                    "mountPath": "D:/Users/862911/ambry/tmp",
+                    "mountPath": "/home/sfapp/ambry/tmp",
                     "port": 6667
                 }
             ]

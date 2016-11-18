@@ -9,7 +9,7 @@
                         {
                             "capacityInBytes": 21474836480,
                             "hardwareState": "AVAILABLE",
-                            "mountPath": "D:/Users/862911/ambry/tmp"
+                            "mountPath": "/home/sfapp/ambry/tmp"
                         }
                     ],
                     "hardwareState": "AVAILABLE",

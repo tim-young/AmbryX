@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>ambry</artifactId>
-        <groupId>com.github</groupId>
+        <groupId>com.github.ambry</groupId>
         <version>${project.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,91 +13,91 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-utils</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-api</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-clustermap</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-messageformat</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-metrics</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-store</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-network</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-commons</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-protocol</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-router</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-admin</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-rest</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-frontend</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-tools</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github</groupId>
+            <groupId>com.github.ambry</groupId>
             <artifactId>ambry-server</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
