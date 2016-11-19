@@ -12,7 +12,8 @@ JVM_PARAS=" -Dlog4j.configuration=file:${CONF_DIR}/log4j.properties "
 JVM_DEBUG_OPTS=""
 JVM_JMX_OPTS=""
 JVM_MEM_OPTS=" -server -Xmx2g -Xms1g -Xmn64m -XX:PermSize=64m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 "
-SYS_CLUSTER_PARA=" --hardwareLayoutFilePath ${CONF_DIR}/HardwareLayout.json --partitionLayoutFilePath ${CONF_DIR}/PartitionLayout.json "
+SYS_PROPERTIES=""
+SYS_CLUSTER_PARA=""
 
 for arg in $*
 do
@@ -58,6 +59,65 @@ watchBootstrap () {
     fi
 }
 
+getConfiguration(){
+    configurations=`ls ${CONF_DIR}`
+    count=1
+    for var in $configurations
+    do
+        echo "${count}. ${var}"
+        count=`expr $count + 1`
+    done
+    echo -n "Please input the sequence number of the Configuration for server properties: "
+    read number
+    count=1
+    for var in $configurations
+    do
+        if [ $count -eq $number ]
+        then
+            SYS_PROPERTIES="--serverPropsFilePath ${CONF_DIR}/${var}"
+        fi
+        count=`expr $count + 1`
+    done
+    count=1
+    for var in $configurations
+    do
+        echo "${count}. ${var}"
+        count=`expr $count + 1`
+    done
+    echo -n "Please input the sequence number of the Configuration for hardwareLayout: "
+    read number
+    count=1
+    for var in $configurations
+    do
+        if [ $count -eq $number ]
+        then
+            SYS_CLUSTER_PARA="--hardwareLayoutFilePath ${CONF_DIR}/${var}"
+        fi
+        count=`expr $count + 1`
+    done
+    count=1
+    for var in $configurations
+    do
+        echo "${count}. ${var}"
+        count=`expr $count + 1`
+    done
+    echo -n "Please input the sequence number of the Configuration for partitionLayout: "
+    read number
+    count=1
+    for var in $configurations
+    do
+        if [ $count -eq $number ]
+        then
+            SYS_CLUSTER_PARA="${SYS_CLUSTER_PARA} --partitionLayoutFilePath ${CONF_DIR}/${var}"
+        fi
+        count=`expr $count + 1`
+    done
+}
+specifyConfiguration(){
+    echo "which is the server properties(please put your configuration files in the configuration folder:${CONF_DIR})?"
+    getConfiguration
+}
+
 bootServer () {
     echo -e "\n************************Please specify the module you want to start:************************\n"
     echo "1. Ambry-Server"
@@ -69,19 +129,25 @@ bootServer () {
     echo ""
     case $MODULE in
     1)
+        specifyConfiguration
         echo "Starting Ambry-Server"
-        java $JVM_DEBUG_OPTS $JVM_JMX_OPTS $JVM_MEM_OPTS $JVM_PARAS -classpath $CONF_DIR:$LIB_JARS com.github.ambry.server.AmbryMain --serverPropsFilePath ${CONF_DIR}/server.properties ${SYS_CLUSTER_PARA} > ${LOG_DIR}/stdout.out 2>&1 &
+        java $JVM_DEBUG_OPTS $JVM_JMX_OPTS $JVM_MEM_OPTS $JVM_PARAS -classpath $CONF_DIR:$LIB_JARS com.github.ambry.server.AmbryMain ${SYS_PROPERTIES} ${SYS_CLUSTER_PARA} > ${LOG_DIR}/stdout.out 2>&1 &
         watchBootstrap "Ambry-Server"
+        echo -e "\n************************************************************************\n"
         ;;
     2)
+        specifyConfiguration
         echo "Starting Ambry-Frontend"
-        java $JVM_DEBUG_OPTS $JVM_JMX_OPTS $JVM_MEM_OPTS $JVM_PARAS -classpath $CONF_DIR:$LIB_JARS  com.github.ambry.frontend.AmbryFrontendMain --serverPropsFilePath ${CONF_DIR}/frontend.properties ${SYS_CLUSTER_PARA} > ${LOG_DIR}/stdout.out 2>&1 &
+        java $JVM_DEBUG_OPTS $JVM_JMX_OPTS $JVM_MEM_OPTS $JVM_PARAS -classpath $CONF_DIR:$LIB_JARS  com.github.ambry.frontend.AmbryFrontendMain ${SYS_PROPERTIES} ${SYS_CLUSTER_PARA} > ${LOG_DIR}/stdout.out 2>&1 &
         watchBootstrap "Ambry-Frontend"
+        echo -e "\n************************************************************************\n"
         ;;
     3)
+        specifyConfiguration
         echo "Starting Ambry-Admin"
-        java $JVM_DEBUG_OPTS $JVM_JMX_OPTS $JVM_MEM_OPTS $JVM_PARAS -classpath $CONF_DIR:$LIB_JARS  com.github.ambry.admin.AdminMain --serverPropsFilePath ${CONF_DIR}/admin.properties ${SYS_CLUSTER_PARA} > ${LOG_DIR}/stdout.out 2>&1 &
+        java $JVM_DEBUG_OPTS $JVM_JMX_OPTS $JVM_MEM_OPTS $JVM_PARAS -classpath $CONF_DIR:$LIB_JARS  com.github.ambry.admin.AdminMain ${SYS_PROPERTIES} ${SYS_CLUSTER_PARA} > ${LOG_DIR}/stdout.out 2>&1 &
         watchBootstrap "Ambry-Admin"
+        echo -e "\n************************************************************************\n"
         ;;
     esac
 }
@@ -125,18 +191,21 @@ showServer () {
     case $MODULE in
     1)
         pids=`ps -ef|grep ambry|grep "${DEPLOY_DIR}"|grep com.github.ambry.server.AmbryMain|awk '{print $2}'`
-        echo "Current Ambry-Server Pids:"
+        echo -e "\n************************Current Ambry-Server Pids:************************\n"
         stopServer $pids $1
+        echo -e "\n************************************************************************\n"
         ;;
     2)
         pids=`ps -ef|grep ambry|grep "${DEPLOY_DIR}"|grep com.github.ambry.frontend.AmbryFrontendMain|awk '{print $2}'`
-        echo "Current Ambry-Frontend Pids:"
+        echo -e "\n************************Current Ambry-Frontend Pids:************************\n"
         stopServer $pids $1
+        echo -e "\n************************************************************************\n"
         ;;
     3)
         pids=`ps -ef|grep ambry|grep "${DEPLOY_DIR}"|grep com.github.ambry.admin.AdminMain|awk '{print $2}'`
-        echo "Current Ambry-Admin Pids:"
+        echo -e "\n************************Current Ambry-Admin Pids:************************\n"
         stopServer $pids $1
+        echo -e "\n************************************************************************\n"
         ;;
     esac
 }
